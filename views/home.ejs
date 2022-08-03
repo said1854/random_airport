@@ -1,0 +1,83 @@
+<html>
+
+<head>
+    <title>Random airport</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Catamaran:wght@200&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/style/style.css" />
+    <!-- <script type="module" src="./index.js"></script> -->
+</head>
+
+<body>
+    <div id="sidebar">
+        <p>Hey this random airport page</p>
+        <p>Name: <%= locals.name || "Said's International Airport"  %> </p>
+        <p>Latitude: <%= lat %> </p>
+        <p>Longitude: <%= lon %> </p>
+        <p>Altitude: <%= alt %> </p>
+        <h3>Guess which country?</h3>
+        <div>
+            <button class="countries"> <%= correctCountry %> </button>
+            <button class="countries"> <%= wrongCountry1 %> </button>
+            <button class="countries"> <%= wrongCountry2 %> </button>
+        </div>
+        <br><br>
+        <button onClick="window.location.reload();">New Airport</button>
+    </div>
+
+    <div id="map"></div>
+    <% var lat = lat %>
+    <% var lon = lon %>
+    <% var russiaAirports = list %>
+    <% var correctCount = correctCountry %>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6Hx-VdUfsj0pdmJG9AvnSV1bn65fw3ww&callback=initMap&v=weekly"
+        defer></script>
+    <!-- <script src="/js/map.js"></script> -->
+    <script>
+        const getTest = "<%= lat  %>";
+        const getTest2 = "<%= lon  %>";
+        const getTest3 = "<%= russiaAirports %>";
+        const getTest4 = "<%= correctCount %>";
+        let buttons = document.querySelectorAll(".countries");
+        buttons.addEventListener("click", function () {
+            alert("Said")
+            // if (this.innerText === correctCount) {
+            //     alert("That's True")
+            // } else {
+            //     alert("Try again!")
+            // }
+        })
+
+        function initMap() {
+            // The location of Uluru
+            const airport = {
+                lat: parseFloat(getTest),
+                lng: parseFloat(getTest2)
+            }
+            const rairport = {
+                lat: parseFloat(getTest3[0]),
+                lng: parseFloat(getTest3[1])
+            }
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 13,
+                center: airport,
+                mapTypeId: 'terrain',
+                heading: 90,
+                tilt: 45,
+            });
+            // The marker, positioned at Uluru
+            const marker = new google.maps.Marker({
+                position: rairport,
+                map: map,
+            });
+            map.setTilt(45);
+        }
+
+        window.initMap = initMap;
+    </script>
+</body>
+
+</html>
